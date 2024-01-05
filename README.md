@@ -12,7 +12,7 @@ To get started with DailyBlog, follow these steps:
 
 ## Demo Video Link
 
-Watch a demo of DailyBlog on YouTube: [Demo Video](https://youtu.be/jkQ_Z-OhPWI)
+Watch a demo video on YouTube: [Demo Video](https://youtu.be/jkQ_Z-OhPWI)
 
                 
 
