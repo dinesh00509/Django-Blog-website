@@ -1,0 +1,102 @@
+{% extends "blog/base.html" %} 
+{% load crispy_forms_tags %}
+{% load static %} 
+{% block content %}
+<article class="media content-section">
+  <img
+    class="rounded-circle article-img"
+    src="{{ object.author.profile.image.url }}"
+  />
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-posts' object.author.username %}"
+        >{{ object.author }}</a
+      >
+      <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+      {% if object.author == user %}
+      <div>
+        <a
+          class="btn btn-secondary btn-sm mt-1 mb-1"
+          href="{% url 'post-update' object.id %}"
+          >Update</a
+        >
+        <a
+          class="btn btn-danger btn-sm mt-1 mb-1"
+          href="{% url 'post-delete' object.id %}"
+          >Delete</a
+        >
+      </div>
+      {% endif %}
+
+    </div>
+    <h2 class="article-title">{{ object.title }}</h2>
+    {% if object.image %}
+    <img class="post-img" src="{{ object.image.url }}" >
+
+{% endif %}
+
+    <p class="article-content">{{ object.content }}</p>
+    
+     <br> <br>
+     
+  </div>
+  
+  <div class="article-metadata">
+    <!-- Display like count -->
+    <span class="btn btn-sm btn-light"><i class="far fa-heart"></i> {{ object.likes.count }}</span>
+    <!-- Check if the user has liked the post -->
+    {% if user.is_authenticated and user not in object.likes.all %}
+    <a href="{% url 'like' object.pk %}" class="btn btn-outline-primary btn-sm ml-2"><i class="far fa-heart"></i> Like</a>
+    {% endif %}
+  </div>
+
+  
+
+
+
+
+</article>
+
+
+<br>
+
+<h3>Comments</h3>
+<ul class="list-unstyled">
+  {% for comment in object.comment_set.all %}
+  <li>
+    <p><strong>{{ comment.author }}</strong> - {{ comment.created_at }}</p>
+  
+    <p>{{ comment.content }}</p>
+    
+    <div class="article-metadata">
+      {% if user.is_authenticated %}
+        {% if user in comment.likes.all %}
+          <a href="{% url 'comment-unlike' comment.pk %}" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-heart"></i> Unlike</a>
+        {% else %}
+          <a href="{% url 'comment-like' comment.pk %}" class="btn btn-outline-primary btn-sm ml-2"><i class="far fa-heart"></i> Like</a>
+        {% endif %}
+      {% endif %}
+      <span class="btn btn-sm btn-light"><i class="far fa-heart"></i> {{ comment.likes.count }}</span>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+<!-- Comment form -->
+{% if user.is_authenticated %}
+<h3>Add a Comment</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ comment_form|crispy }}
+  <button type="submit" class="btn btn-primary">Post Comment</button>
+</form>
+{% endif %}
+
+
+
+  
+  
+
+
+{% endblock content %}
+
