@@ -9,3 +9,11 @@ To get started with DailyBlog, follow these steps:
 1. **Clone the Repository**: `git clone https://github.com/dinesh00509/Django-Blog-website.git`
 2. **Install Dependencies**: `pip install -r requirements.txt`
 3. **Run the Application**: `python manage.py runserver`
+
+## Demo Video Link
+
+Watch a demo of DailyBlog on YouTube: [Demo Video](https://youtu.be/jkQ_Z-OhPWI)
+
+                
+
+
